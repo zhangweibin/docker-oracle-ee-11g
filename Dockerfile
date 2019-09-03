@@ -1,4 +1,4 @@
-FROM sath89/oracle-ee-11g-base:latest
+FROM local/oracle-ee-base:11gR2
 
 ENV DBCA_TOTAL_MEMORY 4096
 ENV WEB_CONSOLE true
@@ -13,5 +13,4 @@ EXPOSE 1521
 EXPOSE 8080
 VOLUME ["/docker-entrypoint-initdb.d"]
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD [""]
+CMD ["tail", "-n", "10", "-f", "/var/log/maillog"]
