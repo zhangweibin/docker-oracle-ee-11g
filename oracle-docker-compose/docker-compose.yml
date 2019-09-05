@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  oracleN1:
+    hostname: oracleN1
+    image: local/oracle-ee-test:11gR2_Build3
+    volumes:
+      - ./hosts:/etc/hosts
+      - /etc/resolv.conf:/etc/resolv.conf
+    environment:
+      - CLUSTER_NAME=test
+    networks:
+         oracleADG:
+            ipv4_address: 172.66.0.2
+    ports:
+      - "1531:1521"
+  oracleN2:
+    hostname: oracleN2
+    image: local/oracle-ee-test:11gR2_Build3
+    volumes:
+      - ./hosts:/etc/hosts
+      - /etc/resolv.conf:/etc/resolv.conf
+    environment:
+      - CLUSTER_NAME=test
+    networks:
+         oracleADG:
+            ipv4_address: 172.66.0.3
+    ports:
+      - "1541:1521"
+
+networks:
+   oracleADG:
+      driver: bridge
+      ipam:
+         config:
+           - subnet: 172.66.0.0/16
